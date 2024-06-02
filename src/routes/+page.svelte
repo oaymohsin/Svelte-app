@@ -5,11 +5,14 @@
   import welcome from "$lib/images/svelte-welcome.webp";
   import welcome_fallback from "$lib/images/svelte-welcome.png";
   import Modal from "./modal.svelte";
+  import SlotComponent from "./slotComponent.svelte";
+  import UserForm from "./forms.svelte";
 
   let source = "Mohsin APp";
   //   ts-ignore ignores the type checking error
   // @ts-ignore
   let number;
+  let showModal = false;
   let arr = [
     {
       id: 1,
@@ -56,6 +59,17 @@
   let deleteUser = (id) => {
     arr = arr.filter((user) => user.id !== id);
   };
+
+  const toggleModal = () => {
+    showModal = !showModal;
+  };
+
+
+ const userFormHandler=(e)=>{
+
+	console.log(e)
+	console.log(e.detail)
+ }
 </script>
 
 <svelte:head>
@@ -108,14 +122,12 @@
 
   <!-- //how to use loop in this svelete template -->
 
-
-
   <!-- conditonal statements -->
 
-  <br /><br />
-  <hr />
-  <br /><br />
+  <br /> <br />
+  <br /> <br />
 
+  <hr>
   <h1>Conditonal Statement</h1>
   <p>Enter any Number</p>
   <input type="text" bind:value={number} />
@@ -131,7 +143,35 @@
   <!-- conditonal statements -->
 
   <!-- we can pass data to components through props -->
-  <Modal message="this is a prop message" showModal={true}/>
+  <!-- <Modal message="this is a prop message" showModal={true} /> -->
+
+  <!-- Event Forwarding in Svelte  -->
+
+  <button on:click={toggleModal}> Open Modal </button>
+  <Modal message="this is a prop message" {showModal} on:click={toggleModal} />
+
+  <!-- Event Forwarding in Svelte  -->
+
+  <!-- Slots in Svelte  -->
+
+  <br /><br /><br />
+  <h1>Slots in Svlete</h1>
+  <SlotComponent>
+    <div>
+      <h3>This is the heading</h3>
+      <p>This is the body of the card .................</p>
+
+    </div>
+    <!-- we also named the slots  -->
+    <div slot="buttonDiv">
+      <button>Click me</button>
+    </div>
+  </SlotComponent>
+
+  <!-- Slots in Svelte  -->
+
+<hr><hr><hr>
+  <UserForm on:personData={userFormHandler}/>
 
 
 </section>
@@ -163,5 +203,9 @@
     height: 100%;
     top: 0;
     display: block;
+  }
+
+  h1{
+	color: crimson;
   }
 </style>

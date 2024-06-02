@@ -1,12 +1,12 @@
 <script>
 
     export let message="default Message";
-    export let showModal=true
-    let promo=true;
+    export let showModal=false;
+    let promo=false;
 
 </script>
 
-<div class="modal" class:promo={promo}>
+<div class="modal" class:promo={promo}  on:click>
     {#if showModal}
     <h3> {message}</h3>
     {/if}
